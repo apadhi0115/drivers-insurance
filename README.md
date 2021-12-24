@@ -16,8 +16,6 @@ This application has three APIs:
 	
   cd drivers-insurance
 	
-  ./mvnw spring-boot:package
-	
   ./mvnw spring-boot:run
   
 **How to Test in local environment**
