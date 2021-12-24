@@ -26,13 +26,25 @@ public class DriverService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DriverService.class);
     ObjectMapper mapper = new ObjectMapper().registerModule(new JavaTimeModule());
     Map<String, String> map = new HashMap<>();
+
     @Autowired
     DriverRepo repo;
 
+    /**
+     * Get the list of the drivers from the data file
+     * @return List<Driver>
+     * @throws IOException
+     */
     public List<Driver> getDrivers() throws IOException {
         return repo.readJsonDataFromFlatFile();
     }
 
+    /**
+     * Retrieves drivers after the given date
+     * @param date
+     * @return List<Driver>
+     * @throws IOException
+     */
     public List<Driver> getDrivers(String date) throws IOException {
         List<Driver> drivers = repo.readJsonDataFromFlatFile();
         LOGGER.debug("original list size ", drivers.size());
@@ -42,6 +54,12 @@ public class DriverService {
         return filteredList;
     }
 
+    /**
+     * Saves driver to the file
+     * @param driver
+     * @return ResponseEntity
+     * @throws IOException
+     */
     public ResponseEntity saveDriver(Driver driver) throws IOException {
         driver.setId(UUID.randomUUID());
         driver.setCreation_date(LocalDateTime.now());
@@ -53,6 +71,11 @@ public class DriverService {
         return new ResponseEntity<Driver>(driver, HttpStatus.CREATED);
     }
 
+    /**
+     * Converts string date to Local date time
+     * @param date
+     * @return LocalDateTime
+     */
     private LocalDateTime getLocalDateFromStringDate(String date) {
         DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate ld = LocalDate.parse(date, FORMATTER);

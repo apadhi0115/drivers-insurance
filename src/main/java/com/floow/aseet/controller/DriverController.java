@@ -22,6 +22,11 @@ public class DriverController {
     @Autowired
     private DriverService driverService;
 
+    /**
+     * Returns the list
+     * @return List<Driver>
+     * @throws IOException
+     */
     @GetMapping("/drivers")
     public ResponseEntity<List<Driver>> getDrivers() throws IOException {
         List<Driver> driverList = driverService.getDrivers();
@@ -29,6 +34,12 @@ public class DriverController {
         return new ResponseEntity<>(driverList, HttpStatus.OK);
     }
 
+    /**
+     *Returns new driver created
+     * @param driver
+     * @return Driver
+     * @throws IOException
+     */
     @PostMapping("/driver/create")
     public ResponseEntity<Driver> saveDriver(@Valid @RequestBody Driver driver) throws IOException {
         LOGGER.debug("driver details passed from input {} ", driver);
@@ -36,6 +47,12 @@ public class DriverController {
 
     }
 
+    /**
+     *Returns the  list of drivers created after the input date
+     * @param date
+     * @return List<Driver>
+     * @throws IOException
+     */
     @GetMapping("/drivers/byDate")
     public ResponseEntity<List<Driver>> getDriversByDate(@Valid @Pattern(regexp = "\\d{4}-\\d{2}-\\d{2}", message = "Date of birth should be yyyy-MM-dd") @RequestParam String date) throws IOException {
         LOGGER.info("Date of birth passed in request param {} ", date);

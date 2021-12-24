@@ -3,6 +3,7 @@ package com.floow.aseet.exception;
 import java.util.Map;
 
 public class ApiError {
+    
     private Map<String, String> errorMap;
 
     public Map<String, String> getErrorList() {

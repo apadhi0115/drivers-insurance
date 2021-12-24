@@ -15,7 +15,14 @@ import java.util.Map;
 
 @ControllerAdvice
 class ExceptionHandler extends ResponseEntityExceptionHandler {
-
+    /**
+     * Handles exception for invalid data in the request object
+     * @param ex
+     * @param headers
+     * @param status
+     * @param request
+     * @return
+     */
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers, HttpStatus status, WebRequest request) {
@@ -30,6 +37,12 @@ class ExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiError, status);
     }
 
+    /**
+     * Handles exception for invalid data in  request params
+     * @param ex
+     * @param request
+     * @return
+     */
     @org.springframework.web.bind.annotation.ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<Object> handleConstraintViolationException(
             Exception ex,

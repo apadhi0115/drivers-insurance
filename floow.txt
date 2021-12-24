@@ -1,1 +1,0 @@
-[{"id":"00057d29-9ec4-44d7-9f54-44129970e8e4","firstname":"Kudung Kudung","lastname":"Padhiiiiiii","date_of_birth":"2015-12-16","creation_date":[2021,12,24,0,26,19,736558000]},{"id":"52db7ba2-3d08-4aba-99ca-163a7849d2bb","firstname":"kyun kyun","lastname":"Padhiiiiiii","date_of_birth":"2015-12-16","creation_date":[2021,12,24,1,5,58,605533000]}]
