@@ -15,8 +15,10 @@ This application has three APIs:
   ./mvnw spring-boot:package
   ./mvnw spring-boot:run
   
-How to Test in local environment
+**How to Test in local environment**
+	
 	http://localhost:8080/drivers -- GET- should return response like below or [] if no data present
+	
 	[
     {
         "id": "00057d29-9ec4-44d7-9f54-44129970e8e4",
