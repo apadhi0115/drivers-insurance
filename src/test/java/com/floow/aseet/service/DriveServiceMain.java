@@ -21,11 +21,11 @@ public class DriveServiceMain {
 //        repo.writeJsonDataToFlatFile(new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(drivers));
 
 
-            try (Reader reader = new FileReader("floow.txt")) {
-                //Gson gson = new Gson();
-                Driver[] drivers = new ObjectMapper().registerModule(new JavaTimeModule()).readValue(reader, Driver[].class);
-                Arrays.stream(drivers).forEach(System.out::println);
-            }
+        try (Reader reader = new FileReader("floow.txt")) {
+            //Gson gson = new Gson();
+            Driver[] drivers = new ObjectMapper().registerModule(new JavaTimeModule()).readValue(reader, Driver[].class);
+            Arrays.stream(drivers).forEach(System.out::println);
+        }
 
     }
 }

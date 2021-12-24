@@ -10,8 +10,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class DriverTest {
 
     @Test
-    public void test_driver_construct(){
-        Driver driver = new Driver(UUID.randomUUID() , "Aseet", "Padhi", "1990-05-01", LocalDateTime.now());
+    public void test_driver_construct() {
+        Driver driver = new Driver(UUID.randomUUID(), "Aseet", "Padhi", "1990-05-01", LocalDateTime.now());
         assertThat(driver).isNotNull();
         assertThat(driver.getFirstname()).isEqualToIgnoringCase("aseet");
         assertThat(driver.getLastname()).isEqualToIgnoringCase("padhi");

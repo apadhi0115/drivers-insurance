@@ -36,9 +36,9 @@ public class DriverInsuranceApplicationTests {
 
     @Test
     public void shouldSave_driver() throws Exception {
-        Driver driver = new Driver(UUID.randomUUID() , "Aseet", "Padhi", "1980-05-01", LocalDateTime.now());
+        Driver driver = new Driver(UUID.randomUUID(), "Aseet", "Padhi", "1980-05-01", LocalDateTime.now());
         String driverJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(driver);
-        MvcResult result = this.mockMvc.perform( MockMvcRequestBuilders
+        MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders
                         .post("/driver/create")
                         .content(driverJson)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -51,15 +51,15 @@ public class DriverInsuranceApplicationTests {
 
     @Test
     public void saving_the_driver_should_throw_bad_request_error() throws Exception {
-        Driver driver = new Driver(UUID.randomUUID() , "Aseet", "Padhi", "05-01-1980", LocalDateTime.now());
+        Driver driver = new Driver(UUID.randomUUID(), "Aseet", "Padhi", "05-01-1980", LocalDateTime.now());
         String driverJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(driver);
         MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders
-                                    .post("/driver/create")
-                                    .content(driverJson)
-                                    .contentType(MediaType.APPLICATION_JSON)
-                                    .accept(MediaType.APPLICATION_JSON))
-                            .andExpect(status().isBadRequest())
-                            .andReturn();
+                        .post("/driver/create")
+                        .content(driverJson)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest())
+                .andReturn();
 
         Assertions.assertThat(result.getResponse().getStatus()).isEqualTo(400);
 
@@ -67,7 +67,7 @@ public class DriverInsuranceApplicationTests {
 
     @Test
     public void get_the_drivers_by_date() throws Exception {
-        Driver driver = new Driver(UUID.randomUUID() , "Aseet", "Padhi", "05-01-1980", LocalDateTime.now());
+        Driver driver = new Driver(UUID.randomUUID(), "Aseet", "Padhi", "05-01-1980", LocalDateTime.now());
         String driverJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(driver);
         MvcResult result = this.mockMvc.perform(get("/drivers/byDate?date=2021-12-22")).andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

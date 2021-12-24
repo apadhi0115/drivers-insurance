@@ -30,7 +30,7 @@ public class DriverControllerTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
-   private WebApplicationContext context;
+    private WebApplicationContext context;
 
     @Autowired
     private ObjectMapper mapper;
@@ -40,7 +40,7 @@ public class DriverControllerTest {
 
     private List<Driver> drivers;
 
-    private String driverJson ;
+    private String driverJson;
 
     private Driver driver;
 
@@ -48,10 +48,10 @@ public class DriverControllerTest {
 
     @BeforeEach
     void setUp() throws JsonProcessingException {
-        drivers = List.of(new Driver(UUID.randomUUID() , "Aseet", "Padhi", "1980-05-01", LocalDateTime.now()),
-                new Driver(UUID.randomUUID() , "Amit", "Padhi", "1990-06-01", LocalDateTime.now()));
+        drivers = List.of(new Driver(UUID.randomUUID(), "Aseet", "Padhi", "1980-05-01", LocalDateTime.now()),
+                new Driver(UUID.randomUUID(), "Amit", "Padhi", "1990-06-01", LocalDateTime.now()));
 
-        driver = new Driver(UUID.randomUUID() , "Junta", "kahani", "1991-07-01", LocalDateTime.now());
+        driver = new Driver(UUID.randomUUID(), "Junta", "kahani", "1991-07-01", LocalDateTime.now());
         driverJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(drivers);
     }
 
@@ -75,7 +75,7 @@ public class DriverControllerTest {
     void save_driver_from_service() throws Exception {
 
         Mockito.when(driverService.getDrivers()).thenReturn(drivers);
-        MvcResult result = this.mockMvc.perform( MockMvcRequestBuilders
+        MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders
                         .post("/driver/create")
                         .content(driverJson)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -88,7 +88,7 @@ public class DriverControllerTest {
     @Test
     public void saving_the_driver_should_throw_error() throws Exception {
         final MvcResult[] result = new MvcResult[1];
-        Driver driver = new Driver(UUID.randomUUID() , "Aseet", "Padhi", "05-01-1980", LocalDateTime.now());
+        Driver driver = new Driver(UUID.randomUUID(), "Aseet", "Padhi", "05-01-1980", LocalDateTime.now());
         String driverJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(driver);
         result[0] = this.mockMvc.perform(MockMvcRequestBuilders
                         .post("/driver/create")
@@ -104,8 +104,8 @@ public class DriverControllerTest {
 
     @Test
     void getDrivers_from_service_by_date() throws Exception {
-        List driversAfterDate = List.of(new Driver(UUID.randomUUID() , "Aseet", "Padhi", "1980-05-01", LocalDateTime.now()),
-                new Driver(UUID.randomUUID() , "Amit", "Padhi", "1990-06-01", LocalDateTime.now()));
+        List driversAfterDate = List.of(new Driver(UUID.randomUUID(), "Aseet", "Padhi", "1980-05-01", LocalDateTime.now()),
+                new Driver(UUID.randomUUID(), "Amit", "Padhi", "1990-06-01", LocalDateTime.now()));
 
         Mockito.when(driverService.getDrivers("2021-12-22")).thenReturn(driversAfterDate);
 
@@ -117,6 +117,23 @@ public class DriverControllerTest {
         Assertions.assertThat(result).isNotNull();
         String driversJson = result.getResponse().getContentAsString();
         Assertions.assertThat(driversJson).isEqualToIgnoringCase(mapper.writeValueAsString(driversAfterDate));
+    }
+
+    @Test
+    void getDrivers_from_service_by_date_throws_invalid_exception() throws Exception {
+        List driversAfterDate = List.of(new Driver(UUID.randomUUID(), "Aseet", "Padhi", "1980-05-01", LocalDateTime.now()),
+                new Driver(UUID.randomUUID(), "Amit", "Padhi", "1990-06-01", LocalDateTime.now()));
+
+        Mockito.when(driverService.getDrivers("22-12-2021")).thenReturn(driversAfterDate);
+
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/drivers/byDate?date=22-12-2021")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andReturn();
+
+        Assertions.assertThat(result).isNotNull();
+        String driversJson = result.getResponse().getContentAsString();
+        Assertions.assertThat(driversJson).contains("getDriversByDate.date: Date of birth should be yyyy-MM-dd");
     }
 
 }

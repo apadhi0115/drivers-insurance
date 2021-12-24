@@ -10,12 +10,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class DriverInsuranceApplicationSmokeTests {
 
-	@Autowired
-	private DriverController controller;
+    @Autowired
+    private DriverController controller;
 
-	@Test
-	void contextLoads() {
-		assertThat(controller).isNotNull();
-	}
+    @Test
+    void contextLoads() {
+        assertThat(controller).isNotNull();
+    }
 
 }

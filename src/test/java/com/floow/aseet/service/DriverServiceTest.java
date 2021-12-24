@@ -33,8 +33,8 @@ public class DriverServiceTest {
 
     @Test
     public void getAll_drivers() throws IOException {
-        List<Driver> drivers = List.of(new Driver(UUID.randomUUID() , "Aseet", "Padhi", "1980-05-01", LocalDateTime.now()),
-                new Driver(UUID.randomUUID() , "Kumar", "Das", "1990-11-11", LocalDateTime.now()));
+        List<Driver> drivers = List.of(new Driver(UUID.randomUUID(), "Aseet", "Padhi", "1980-05-01", LocalDateTime.now()),
+                new Driver(UUID.randomUUID(), "Kumar", "Das", "1990-11-11", LocalDateTime.now()));
         when(driverService.getDrivers()).thenReturn(drivers);
         List<Driver> driverList = driverService.getDrivers();
         Assertions.assertEquals(2, driverList.size());
@@ -43,21 +43,22 @@ public class DriverServiceTest {
 
     @Test
     public void save_drivers() throws IOException {
-        Driver driver = new Driver(UUID.randomUUID() , "Aseet", "Padhi", "1980-05-01", LocalDateTime.now());
+        Driver driver = new Driver(UUID.randomUUID(), "Aseet", "Padhi", "1980-05-01", LocalDateTime.now());
         driverService.saveDriver(driver);
         verify(driverRepo).writeJsonDataToFlatFile(anyString());
     }
 
     @Test
     public void getAll_drivers_by_date() throws IOException {
-        List<Driver> drivers = List.of(new Driver(UUID.randomUUID() , "Aseet", "Padhi", "1980-05-01", LocalDateTime.now()),
-                new Driver(UUID.randomUUID() , "Kumar", "Das", "1990-11-11", getLocalDateFromStringDate("2019-12-12")));
+        List<Driver> drivers = List.of(new Driver(UUID.randomUUID(), "Aseet", "Padhi", "1980-05-01", LocalDateTime.now()),
+                new Driver(UUID.randomUUID(), "Kumar", "Das", "1990-11-11", getLocalDateFromStringDate("2019-12-12")));
         when(driverService.getDrivers("2021-12-22")).thenReturn(drivers);
         List<Driver> driverList = driverService.getDrivers("2021-12-22");
         Assertions.assertEquals(1, driverList.size());
         verify(driverRepo).readJsonDataFromFlatFile();
     }
-    private LocalDateTime getLocalDateFromStringDate(String date){
+
+    private LocalDateTime getLocalDateFromStringDate(String date) {
         DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate ld = LocalDate.parse(date, FORMATTER);
         return LocalDateTime.of(ld, LocalDateTime.now().toLocalTime());
