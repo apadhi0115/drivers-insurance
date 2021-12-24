@@ -2,9 +2,11 @@
 
 This application has three APIs:
 
-/driver/create- A POST end point allows new drivers to be created and stored 
-/drivers -- A GET endpoint which returns a list of all existing drivers in JSON format
-/drivers/byDate?date=<date> -- A GET endpoint which returns a list of all drivers created after the specified date.
+/driver/create  - A POST end point allows new driver to be created and stored
+
+/drivers   -- A GET endpoint which returns a list of all existing drivers in JSON format
+
+/drivers/byDate?date=<date>  -- A GET endpoint which returns a list of all drivers created after the specified date.
   
   The json data are stored in a flat file
   
