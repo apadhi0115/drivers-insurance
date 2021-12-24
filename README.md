@@ -13,8 +13,11 @@ This application has three APIs:
  ** How to build the application: **
   
   git clone git@github.com:apadhi0115/drivers-insurance.git
+	
   cd drivers-insurance
+	
   ./mvnw spring-boot:package
+	
   ./mvnw spring-boot:run
   
 **How to Test in local environment**
